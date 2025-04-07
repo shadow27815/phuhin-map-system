@@ -1,0 +1,12 @@
+# Frontend (React)
+my-map-app/node_modules/
+my-map-app/build/
+my-map-app/.env
+
+
+# Logs, system, editor, etc.
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.env

@@ -1,0 +1,10 @@
+# Backend (Express)
+myproject/node_modules/
+myproject/.env
+
+# Logs, system, editor, etc.
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.env
