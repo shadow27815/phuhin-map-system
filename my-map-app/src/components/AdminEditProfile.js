@@ -17,14 +17,15 @@ const AdminEditProfile = () => {
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
-
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
     const token = localStorage.getItem("adminToken");
 
     useEffect(() => {
-        axios.get("http://localhost:3001/api/admins/me", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+        const token = localStorage.getItem("adminToken"); // ย้ายมาไว้ในนี้
+        if (!token) return;
+
+        axios.get(`${API_BASE_URL}/api/admins/me`, {
+            headers: { Authorization: `Bearer ${token}` }
         })
             .then(res => {
                 setAdmin({ username: res.data.username, password: "" });
@@ -32,7 +33,7 @@ const AdminEditProfile = () => {
             .catch(() => {
                 setError("ไม่สามารถโหลดข้อมูลแอดมินได้");
             });
-    }, [token]);
+    }, [API_BASE_URL]);
 
     const handleChange = (e) => {
         setAdmin({ ...admin, [e.target.name]: e.target.value });
@@ -47,7 +48,7 @@ const AdminEditProfile = () => {
         }
 
         try {
-            await axios.put("http://localhost:3001/api/admins/me", admin, {
+            await axios.put(`${API_BASE_URL}/api/admins/me`, admin, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

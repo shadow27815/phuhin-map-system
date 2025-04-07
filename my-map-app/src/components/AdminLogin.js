@@ -16,7 +16,7 @@ const AdminLogin = () => {
         setError(""); // clear error ก่อน
 
         try {
-            const res = await axios.post("http://localhost:3001/api/admins/login", {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/admins/login`, {
                 username,
                 password
             });

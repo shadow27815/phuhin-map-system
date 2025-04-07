@@ -21,12 +21,13 @@ const AdminManagePoints = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
+    const token = localStorage.getItem("adminToken");
 
     const fetchPoints = async () => {
         try {
-            const token = localStorage.getItem("adminToken");
 
-            const res = await axios.get("http://localhost:3001/api/points", {
+            const res = await axios.get(`${API_BASE_URL}/api/points`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -58,8 +59,7 @@ const AdminManagePoints = () => {
         if (!confirm) return;
 
         try {
-            const token = localStorage.getItem("adminToken");
-            await axios.delete(`http://localhost:3001/api/points/${id}`, {
+            await axios.delete(`${API_BASE_URL}/api/points/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 

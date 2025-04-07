@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 const PrivateRoute = ({ children }) => {
-    const [isValid, setIsValid] = useState(null); // null = loading, true = pass, false = fail
+    const [isValid, setIsValid] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken");
@@ -12,17 +14,13 @@ const PrivateRoute = ({ children }) => {
             return;
         }
 
-        axios
-            .get("http://localhost:3001/api/admins/me", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then(() => {
-                setIsValid(true);
-            })
+        axios.get(`${API_BASE_URL}/api/admins/me`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(() => setIsValid(true))
             .catch(() => {
-                // 🔐 Token ไม่ถูกต้อง หรือหมดอายุ
                 localStorage.removeItem("adminToken");
                 localStorage.removeItem("adminLoggedIn");
                 localStorage.removeItem("adminName");
@@ -30,10 +28,7 @@ const PrivateRoute = ({ children }) => {
             });
     }, []);
 
-    if (isValid === null) {
-        return null; // หรือ Loading Spinner ก็ได้
-    }
-
+    if (isValid === null) return null;
     return isValid ? children : <Navigate to="/admin/login" replace />;
 };
 

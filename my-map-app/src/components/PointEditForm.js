@@ -14,22 +14,27 @@ const PointEditForm = ({ pointId, onSuccess }) => {
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/points/${pointId}`).then((res) => {
-            const point = res.data;
-            setFormData({
-                name: point.name || "",
-                description: point.description || "",
-                sym: point.sym || "",
-                lat: point.lat || "",
-                lng: point.lng || "",
-            });
-            if (point.image) {
-                setExistingImage(point.image); // ✅ เก็บชื่อไฟล์ภาพเดิม
-                setPreviewUrl(`http://localhost:3001/uploads/${point.image}`);
+        const fetchPoint = async () => {
+            try {
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/points/${pointId}`);
+                const point = res.data;
+                setFormData({
+                    name: point.name || "",
+                    description: point.description || "",
+                    sym: point.sym || "",
+                    lat: point.lat || "",
+                    lng: point.lng || "",
+                });
+                if (point.image) {
+                    setExistingImage(point.image);
+                    setPreviewUrl(`${process.env.REACT_APP_API_URL}/uploads/${point.image}`);
+                }
+            } catch (err) {
+                setSnackbar({ open: true, message: "❌ โหลดข้อมูลไม่สำเร็จ", severity: "error" });
             }
-        }).catch(() => {
-            setSnackbar({ open: true, message: "❌ โหลดข้อมูลไม่สำเร็จ", severity: "error" });
-        });
+        };
+
+        fetchPoint();
     }, [pointId]);
 
     const handleChange = (e) => {
@@ -44,6 +49,7 @@ const PointEditForm = ({ pointId, onSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem("adminToken");
         try {
             const data = new FormData();
             Object.entries(formData).forEach(([key, val]) => data.append(key, val));
@@ -53,7 +59,13 @@ const PointEditForm = ({ pointId, onSuccess }) => {
                 data.append("existingImage", existingImage); // ✅ ส่งชื่อรูปเดิมไป backend
             }
 
-            await axios.put(`http://localhost:3001/api/points/${pointId}`, data);
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/points/${pointId}`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
             setSnackbar({ open: true, message: "✅ แก้ไขจุดพิกัดสำเร็จ", severity: "success" });
             if (onSuccess) onSuccess();
         } catch {

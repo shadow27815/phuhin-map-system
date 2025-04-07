@@ -56,3 +56,9 @@ app.use('/api/points', pointsRoutes(pool));
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+// จัดการ error แบบ global
+process.on("unhandledRejection", err => {
+    console.error("❌ Unhandled Rejection:", err);
+    process.exit(1); // บังคับปิดเพื่อให้รู้ว่าโปรแกรมมีปัญหา
+});

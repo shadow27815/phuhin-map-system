@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Container, Paper, Typography, Box, Button } from "@mui/material";
 import PointEditForm from "./PointEditForm";
 import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 const PointEditPage = () => {
     const { id } = useParams();
@@ -10,7 +11,7 @@ const PointEditPage = () => {
     const [point, setPoint] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/points/${id}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/points/${id}`)
             .then((res) => {
                 const data = res.data;
                 setPoint({
@@ -48,7 +49,10 @@ const PointEditPage = () => {
                 {point ? (
                     <PointEditForm pointId={id} onSuccess={handleSuccess} />
                 ) : (
-                    <p>Loading...</p>
+                    <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                        <CircularProgress />
+                    </Box>
+
                 )}
             </Paper>
         </Container>

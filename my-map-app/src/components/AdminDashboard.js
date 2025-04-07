@@ -16,6 +16,7 @@ const AdminDashboard = () => {
     const [adminName, setAdminName] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken");
@@ -26,7 +27,7 @@ const AdminDashboard = () => {
         }
 
         axios
-            .get("http://localhost:3001/api/admins/me", {
+            .get(`${API_BASE_URL}/api/admins/me`, {
                 headers: { Authorization: `Bearer ${token}` },
             })
             .then((res) => {
@@ -39,7 +40,7 @@ const AdminDashboard = () => {
                 setLoading(false);
                 navigate("/admin/login");
             });
-    }, [navigate]);
+    }, [navigate, API_BASE_URL]);
 
     const handleLogout = () => {
         localStorage.removeItem("adminLoggedIn");

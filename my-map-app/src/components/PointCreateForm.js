@@ -4,6 +4,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
+const token = localStorage.getItem("adminToken");
+
 const PointCreateForm = ({ onSuccess }) => {
     const [formData, setFormData] = useState({
         name: "", description: "", sym: "", lat: "", lng: "",
@@ -29,7 +31,12 @@ const PointCreateForm = ({ onSuccess }) => {
             Object.entries(formData).forEach(([key, val]) => data.append(key, val));
             if (imageFile) data.append("image", imageFile);
 
-            await axios.post("http://localhost:3001/api/points", data);
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/points`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
             setSnackbar({ open: true, message: "✅ เพิ่มจุดพิกัดสำเร็จ", severity: "success" });
             if (onSuccess) onSuccess();
         } catch {
