@@ -224,7 +224,7 @@ const NUATM = () => {
                         <img
                             src={iconStyles[point.sym] || "/assets/default-marker.png"}
                             alt={point.name}
-                            style={{ width: "30px", height: "41px", cursor: "pointer" }}
+                            style={{ width: "30px", height: "41px", objectFit: "contain", cursor: "pointer" }}
                         />
                     </Marker>
                 ))}
