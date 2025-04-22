@@ -191,7 +191,6 @@ const NUATM = () => {
                 )}
             </div>
 
-
             <Map
                 interactive={true}
                 ref={mapRef}
