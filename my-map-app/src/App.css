@@ -180,7 +180,7 @@ body.sidebar-open {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   font-family: 'Mitr', sans-serif;
   z-index: 1000;
-  width: 350px;
+  width: 300px;
   max-width: 100%;
   gap: 8px;
 }
@@ -212,7 +212,7 @@ body.sidebar-open {
 
 .map-search-results {
   position: absolute;
-  top: 60px;
+  top: 10px;
   right: 10px;
   left: auto;
   background-color: #fff;
