@@ -70,7 +70,12 @@ const NavigationSidebar = ({ destination, distance, duration, onStop }) => {
             <h3>🚗 กำลังนำทาง</h3>
             <p><strong>ไปยัง:</strong> {destination.name}</p>
             <p><strong>ระยะทาง:</strong> {(distance / 1000).toFixed(2)} กม.</p>
-            <p><strong>เวลาโดยประมาณ:</strong> {Math.ceil(duration / 60)} นาที</p>
+            <p><strong>เวลาโดยประมาณ:</strong> {
+                Math.floor(duration / 3600) > 0
+                    ? `${Math.floor(duration / 3600)} ชั่วโมง ${Math.ceil((duration % 3600) / 60)} นาที`
+                    : `${Math.ceil(duration / 60)} นาที`
+            }</p>
+
             <button
                 style={{
                     backgroundColor: "#dc3545",

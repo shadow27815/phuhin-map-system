@@ -10,3 +10,4 @@ my-map-app/.env
 Thumbs.db
 .vscode/
 .env
+.vercel
