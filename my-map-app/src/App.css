@@ -180,8 +180,8 @@ body.sidebar-open {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   font-family: 'Mitr', sans-serif;
   z-index: 1000;
-  max-width: 90vw;
-  width: auto;
+  width: 350px;
+  max-width: 100%;
   gap: 8px;
 }
 
