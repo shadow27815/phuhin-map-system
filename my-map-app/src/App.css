@@ -167,3 +167,54 @@ body.sidebar-open {
   padding: 0 !important;
   margin: 0 !important;
 }
+
+.map-search-box {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  width: 240px;
+  font-family: 'Mitr', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .map-search-box {
+    top: 70px;
+    width: 90%;
+    max-width: 400px;
+    /* ✅ เพิ่มบรรทัดนี้ */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.map-search-box input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+
+.map-search-results {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.map-search-results div {
+  padding: 6px 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.map-search-results div:hover {
+  background-color: #d0ebff;
+}

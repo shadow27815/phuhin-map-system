@@ -51,6 +51,8 @@ const NUATM = () => {
     const [distance, setDistance] = useState(null);
     const [duration, setDuration] = useState(null);
     const [navigationTarget, setNavigationTarget] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/mypoints`)
@@ -86,6 +88,18 @@ const NUATM = () => {
         return () => navigator.geolocation.clearWatch(watchIdRef.current);
     }, []);
 
+    useEffect(() => {
+        if (searchTerm.trim() === "") {
+            setSearchResults([]);
+            return;
+        }
+
+        const results = data.filter((point) =>
+            point.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setSearchResults(results);
+    }, [searchTerm, data]);
+
     const fetchWeather = async (lat, lng) => {
         try {
             const res = await axios.get(
@@ -98,7 +112,7 @@ const NUATM = () => {
     };
 
     const getRoute = async (destination) => {
-        console.log("🔁 เรียก getRoute แล้ว", destination); // ✅ ใส่ตรงนี้
+        console.log("🔁 เรียก getRoute แล้ว", destination);
         if (!userLocation || !destination) {
             console.warn("⚠️ ไม่พบตำแหน่ง user หรือปลายทาง", userLocation, destination);
             return;
@@ -119,8 +133,6 @@ const NUATM = () => {
                 })
                 .send();
 
-            console.log("✅ ได้เส้นทาง:", res.body.routes[0]);
-
             const coords = res.body.routes[0].geometry.coordinates;
             const dist = res.body.routes[0].distance;
             const dur = res.body.routes[0].duration;
@@ -130,6 +142,13 @@ const NUATM = () => {
             setDuration(dur);
             setNavigationTarget(destination);
             setNavigationActive(true);
+
+            // ย้ายหน้าจอไปยังตำแหน่งผู้ใช้
+            mapRef.current?.flyTo({
+                center: [userLocation.lng, userLocation.lat],
+                zoom: 15,
+                duration: 1000,
+            });
         } catch (err) {
             console.error("❌ เกิดข้อผิดพลาดตอน getRoute:", err);
         }
@@ -142,7 +161,39 @@ const NUATM = () => {
 
     return (
         <div className="map-container">
+            <div className="map-search-box">
+                <input
+                    type="text"
+                    placeholder="🔍 ค้นหาสถานที่..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {searchResults.length > 0 && (
+                    <div className="map-search-results">
+                        {searchResults.map((result) => (
+                            <div
+                                key={result.id}
+                                onClick={() => {
+                                    mapRef.current?.flyTo({
+                                        center: [result.lng, result.lat],
+                                        zoom: 15,
+                                        duration: 1000,
+                                    });
+                                    setSelectedMarker(result);
+                                    setSearchTerm("");
+                                    setSearchResults([]);
+                                }}
+                            >
+                                📍 {result.name}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+
             <Map
+                interactive={true}
                 ref={mapRef}
                 initialViewState={{ latitude: defaultCoordinates.lat, longitude: defaultCoordinates.lng, zoom: 13 }}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
@@ -179,6 +230,7 @@ const NUATM = () => {
                     </Marker>
                 ))}
 
+
                 {selectedMarker && (
                     <Popup
                         longitude={selectedMarker.lng}
@@ -214,12 +266,21 @@ const NUATM = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{
-                                        display: "block", marginTop: 10, padding: 8,
-                                        backgroundColor: "#007bff", color: "#fff", textAlign: "center", borderRadius: 5
+                                        display: "block",
+                                        marginTop: 10,
+                                        padding: 10,
+                                        backgroundColor: "#e0f0ff", // พื้นหลังฟ้าอ่อน
+                                        color: "#003366",           // ตัวหนังสือสีเข้ม
+                                        fontWeight: "bold",         // ทำให้ตัวหนา
+                                        textAlign: "center",
+                                        borderRadius: 5,
+                                        textDecoration: "none",     // ลบเส้นใต้ลิงก์
+                                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)" // เพิ่มเงาเบาๆ
                                     }}
                                 >
                                     🔗 ดูเพิ่มเติม
                                 </a>
+
                             )}
                         </div>
                     </Popup>
