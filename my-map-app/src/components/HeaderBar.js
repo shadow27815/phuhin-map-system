@@ -7,6 +7,7 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
 function HeadersBar() {
@@ -43,6 +44,21 @@ function HeadersBar() {
                         />
                     </IconButton>
                     {/* /LOGO */}
+
+                    {/* 🔶 Banner Text */}
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            flexGrow: 1,
+                            textAlign: 'center',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: { xs: "14px", md: "18px" },
+                            paddingX: 2,
+                        }}
+                    >
+                        ระบบแนะนำเส้นทางแหล่งท่องเที่ยวภายในอุทยานแห่งชาติภูหินร่องกล้า
+                    </Typography>
 
                     {/* Map Menu */}
                     <Box>
