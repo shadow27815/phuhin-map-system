@@ -19,7 +19,10 @@ const AppLayout = () => {
   return (
     <>
       <HeaderBar />
-      <main className={`main-content ${location.pathname === '/map' ? 'no-scroll-page' : ''}`}>
+      <main
+        className={`main-content ${location.pathname === '/map' ? 'no-scroll-page' : ''}`}
+        style={{ paddingTop: location.pathname === '/map' ? 0 : '68px' }}
+      >
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/map" element={<NUATMPage />} />
