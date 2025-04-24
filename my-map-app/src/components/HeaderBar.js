@@ -45,10 +45,11 @@ function HeadersBar() {
                 <Toolbar
                     disableGutters
                     sx={{
-                        flexDirection: { xs: "column", md: "row" },
+                        display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        textAlign: "center"
+                        flexDirection: "row",
+                        flexWrap: "wrap"
                     }}
                 >
                     {/* LOGO ซ้าย */}
@@ -56,32 +57,34 @@ function HeadersBar() {
                         <Avatar
                             alt="NU Logo"
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjNnG4S3XghAe7ZrcUPaCTOeLJZfhtamKj1Q&s"
-                            sx={{ width: 60, height: 50 }}
+                            sx={{ width: { xs: 45, md: 60 }, height: { xs: 40, md: 50 } }}
                         />
                     </IconButton>
 
-                    {/* BANNER TEXT ตรงกลาง */}
+                    {/* ข้อความตรงกลาง */}
                     <Typography
                         variant="h6"
                         sx={{
                             color: 'white',
                             fontWeight: 'bold',
-                            fontSize: { xs: "13px", sm: "15px", md: "18px" },
-                            paddingY: { xs: 1, md: 0 },
-                            maxWidth: "100%",
-                            lineHeight: 1.4,
+                            fontSize: { xs: "12px", sm: "14px", md: "18px" },
+                            textAlign: "center",
+                            flex: 1,
+                            mx: 2,
+                            whiteSpace: "normal",
+                            lineHeight: 1.4
                         }}
                     >
                         ระบบแนะนำเส้นทางแหล่งท่องเที่ยวภายในอุทยานแห่งชาติภูหินร่องกล้า
                     </Typography>
 
-                    {/* เมนูขวา */}
+                    {/* LOGO ขวา */}
                     <Box>
                         <IconButton onClick={handleMenuOpen}>
                             <img
                                 src="/assets/mapicon3.png"
                                 alt="อุทยานแห่งชาติ"
-                                style={{ width: 60, height: "auto" }}
+                                style={{ width: "auto", height: "50px", maxHeight: "100%" }}
                             />
                         </IconButton>
                         <Menu
