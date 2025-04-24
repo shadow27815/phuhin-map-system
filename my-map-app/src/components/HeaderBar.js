@@ -32,10 +32,26 @@ function HeadersBar() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: "#8B4513", boxShadow: "none", borderBottom: "1px solid #E0E0E0" }}>
+        <AppBar
+            position="static"
+            sx={{
+                backgroundColor: "#8B4513",
+                boxShadow: "none",
+                borderBottom: "1px solid #E0E0E0",
+                paddingY: { xs: 1, md: 0 }
+            }}
+        >
             <Container maxWidth="xl">
-                <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-                    {/* LOGO */}
+                <Toolbar
+                    disableGutters
+                    sx={{
+                        flexDirection: { xs: "column", md: "row" },
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        textAlign: "center"
+                    }}
+                >
+                    {/* LOGO ซ้าย */}
                     <IconButton onClick={handleLogoClick} sx={{ p: 0 }}>
                         <Avatar
                             alt="NU Logo"
@@ -43,24 +59,23 @@ function HeadersBar() {
                             sx={{ width: 60, height: 50 }}
                         />
                     </IconButton>
-                    {/* /LOGO */}
 
-                    {/* 🔶 Banner Text */}
+                    {/* BANNER TEXT ตรงกลาง */}
                     <Typography
                         variant="h6"
                         sx={{
-                            flexGrow: 1,
-                            textAlign: 'center',
                             color: 'white',
                             fontWeight: 'bold',
-                            fontSize: { xs: "14px", md: "18px" },
-                            paddingX: 2,
+                            fontSize: { xs: "13px", sm: "15px", md: "18px" },
+                            paddingY: { xs: 1, md: 0 },
+                            maxWidth: "100%",
+                            lineHeight: 1.4,
                         }}
                     >
                         ระบบแนะนำเส้นทางแหล่งท่องเที่ยวภายในอุทยานแห่งชาติภูหินร่องกล้า
                     </Typography>
 
-                    {/* Map Menu */}
+                    {/* เมนูขวา */}
                     <Box>
                         <IconButton onClick={handleMenuOpen}>
                             <img
@@ -79,7 +94,6 @@ function HeadersBar() {
                             <MenuItem onClick={handleAdminLogin}>สำหรับเจ้าหน้าที่</MenuItem>
                         </Menu>
                     </Box>
-                    {/* /Map Menu */}
                 </Toolbar>
             </Container>
         </AppBar>
