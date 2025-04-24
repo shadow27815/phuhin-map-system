@@ -33,12 +33,13 @@ function HeadersBar() {
 
     return (
         <AppBar
-            position="static"
+            position="fixed"
             sx={{
                 backgroundColor: "#8B4513",
                 boxShadow: "none",
                 borderBottom: "1px solid #E0E0E0",
-                paddingY: { xs: 1, md: 0 }
+                paddingY: { xs: 1, md: 0 },
+                zIndex: 1300,
             }}
         >
             <Container maxWidth="xl">
