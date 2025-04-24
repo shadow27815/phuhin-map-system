@@ -190,7 +190,7 @@ body.sidebar-open {
 
 @media (max-width: 768px) {
   .map-search-box {
-    top: 13px;
+    top: 18px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
@@ -215,7 +215,7 @@ body.sidebar-open {
 
 .map-search-results {
   position: absolute;
-  top: 48px;
+  top: 53px;
   right: 10px;
   left: auto;
   background-color: #fff;
