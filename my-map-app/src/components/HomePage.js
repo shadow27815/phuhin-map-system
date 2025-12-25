@@ -101,9 +101,9 @@ const HomePage = () => {
                 </div>
                 <div className="profile-image">
                     {/* ลิ้งค์ไปยังหน้าแผนที่ */}
-                    <a href="/map">
+                    <Link to="/map">
                         <img src="/assets/home12.png" alt="Profile Image" />
-                    </a>
+                    </Link>
                 </div>
             </section>
         </div>
