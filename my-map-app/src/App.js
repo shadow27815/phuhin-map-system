@@ -12,8 +12,6 @@ import PointCreatePage from './components/PointCreatePage';
 import PrivateRoute from './components/PrivateRoute';
 import PointEditPage from './components/PointEditPage';
 import AdminEditProfile from './components/AdminEditProfile';
-import LayerControl from './components/LayerControl';
-import MapLegend from "./components/MapLegend";
 
 const AppLayout = () => {
   const location = useLocation();
